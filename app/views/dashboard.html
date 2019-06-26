@@ -67,7 +67,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="user_activity in user_activities | search: 'name':name_search" ng-click="viewUserActivityDetail(user_activity)" style="cursor:pointer;">
+                <tr ng-repeat="user_activity in user_activities | search: 'user_name':user_search" ng-click="viewUserActivityDetail(user_activity)" style="cursor:pointer;">
                     <td>
                         {{user_activity.rank+1}}
                     </td>
@@ -80,7 +80,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="alert alert-info" ng-show="(user_activities | search: 'name':name_search).length==0 ">No records found.</div>
+        <div class="alert alert-info" ng-show="(user_activities | search: 'user_name':user_search).length==0 ">No records found.</div>
 
 
         <hr />
