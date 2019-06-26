@@ -1,0 +1,58 @@
+﻿<div class="modal-header">
+    <button class="btn btn-link text-muted float-right" ng-click="close()"><span class="fas fa-times" /></button>
+    <h3 class="modal-title">Edit User Activity</h3>
+</div>
+
+<div class="modal-body">
+
+    <div ng-show="loading" style="font-size: 60px; text-align: center;">
+        <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
+    </div>
+
+    <div ng-form="formUserActivity" id="formPoints" class="form" ng-show="!loading">
+        
+        <div class="form-group">
+            <label for="user_id" class="control-label">User Id <span class="text-danger">*</span></label>
+            <input type="text" name="user_id" class="form-control" ng-model="user_activity.user_id" required ng-class="{'is-invalid': formUserActivity.user_id.$invalid && submitted, 'is-valid': formUserActivity.user_id.$valid && submitted}" />
+            <div class="error text-danger" role="alert" ng-messages="formUserActivity.user_id.$error" ng-if="submitted" ng-cloak>
+                <div ng-message="required">This field is required</div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="activity_id" class="control-label">Activity <span class="text-danger">*</span></label>
+            <select name="activity_id" ng-model="user_activity.activity_id" class="form-control" ng-options="activity.id as activity.name for activity in activities" required ng-change="activityChanged()" ng-class="{'is-invalid': formUserActivity.activity_id.$invalid && submitted, 'is-valid': formUserActivity.activity_id.$valid && submitted}"></select>
+            <div class="error text-danger" role="alert" ng-messages="formUserActivity.activity_id.$error" ng-if="submitted" ng-cloak>
+                <div ng-message="required">This field is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="date" class="control-label">Date <span class="text-danger">*</span></label>
+            <div class="input-group">
+                <input name="date" id="date" type="text" placeholder="mm/dd/yyyy" class="form-control" date-formatter uib-datepicker-popup="M!/d!/yyyy" ng-model="user_activity.date" is-open="dateTimePicker.isOpen" datepicker-options="dateOptions" close-text="Close" ng-class="{'is-invalid': formUserActivity.date.$invalid && submitted, 'is-valid': formUserActivity.date.$valid && submitted}" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <a href="#" class="text-muted" ng-click="dateTimePicker.isOpen=!dateTimePicker.isOpen"><i class="fas fa-calendar"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="count" class="control-label">Count <span class="text-danger">*</span></label>
+            <input type="number" name="count" class="form-control" ng-model="user_activity.count" required ng-class="{'is-invalid': formUserActivity.count.$invalid && submitted, 'is-valid': formUserActivity.count.$valid && submitted}" />
+            <div class="error text-danger" role="alert" ng-messages="formUserActivity.count.$error" ng-if="submitted" ng-cloak>
+                <div ng-message="required">This field is required</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-link pull-left" ng-click="close()"><span ng-show="!formUserActivity.$dirty">Close</span><span ng-show="formUserActivity.$dirty">Cancel</span></button>
+    <button class="btn btn-primary" ng-click="saveUserActivity()"><span ng-show="!user_activity.id">Create</span><span ng-show="user_activity.id">Save</span></button>
+</div>
+
+

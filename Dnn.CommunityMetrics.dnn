@@ -1,0 +1,236 @@
+﻿<dotnetnuke type="Package" version="5.0">
+  <packages><package name="Dnn.CommunityMetrics" type="Module" version="1.0.2">
+  <friendlyName>Dnn.CommunityMetrics</friendlyName>
+  <description>Community Metrics</description>
+  <iconFile>/Images/icon_extensions_32px.png</iconFile>
+  <owner>
+    <name />
+    <organization />
+    <url />
+    <email />
+  </owner>
+  <license>The license for this package is not currently included within the installation file, please check with the vendor for full license details.</license>
+  <releaseNotes>This package has no Release Notes</releaseNotes>
+  <components>
+    <component type="Script">
+      <scripts>
+        <basePath>DesktopModules\Dnn.CommunityMetrics</basePath>
+        <script type="Install">
+          <path>Scripts</path>
+          <name>01.00.00.sql</name>
+          <version>01.00.00</version>
+        </script>
+      </scripts>
+    </component>
+    <component type="Module">
+      <desktopModule>
+        <moduleName>Dnn.CommunityMetrics</moduleName>
+        <foldername>Dnn.CommunityMetrics</foldername>
+        <businessControllerClass />
+        <supportedFeatures />
+        <moduleDefinitions>
+          <moduleDefinition>
+            <friendlyName>Community Metrics</friendlyName>
+            <definitionName>CommunityMetrics</definitionName>
+            <defaultCacheTime>0</defaultCacheTime>
+            <moduleControls>
+              <moduleControl>
+                <controlKey />
+                <controlSrc>DesktopModules/Dnn.CommunityMetrics/Dashboard.ascx</controlSrc>
+                <supportsPartialRendering>False</supportsPartialRendering>
+                <controlTitle />
+                <controlType>View</controlType>
+                <iconFile />
+                <helpUrl />
+                <supportsPopUps>False</supportsPopUps>
+                <viewOrder>0</viewOrder>
+              </moduleControl>
+              <moduleControl>
+                <controlKey>Admin</controlKey>
+                <controlSrc>DesktopModules/Dnn.CommunityMetrics/Admin.ascx</controlSrc>
+                <supportsPartialRendering>False</supportsPartialRendering>
+                <controlTitle />
+                <controlType>Edit</controlType>
+                <iconFile />
+                <helpUrl />
+                <supportsPopUps>False</supportsPopUps>
+                <viewOrder>0</viewOrder>
+              </moduleControl>
+            </moduleControls>
+          </moduleDefinition>
+        </moduleDefinitions>
+      </desktopModule>
+    </component>
+    <component type="Assembly">
+      <assemblies>
+        <basePath>bin</basePath>
+        <assembly>
+          <name>Dnn.CommunityMetrics.dll</name>
+        </assembly>
+      </assemblies>
+    </component>
+    <component type="File">
+      <files>
+        <basePath>DesktopModules\Dnn.CommunityMetrics</basePath>
+        <file>
+          <name>Admin.ascx</name>
+        </file>
+        <file>
+          <path>app</path>
+          <name>app.js</name>
+        </file>
+        <file>
+          <path>app\controllers\activity-setting</path>
+          <name>activity-setting-edit.js</name>
+        </file>
+        <file>
+          <path>app\controllers\activity</path>
+          <name>activity-delete.js</name>
+        </file>
+        <file>
+          <path>app\controllers\activity</path>
+          <name>activity-edit.js</name>
+        </file>
+        <file>
+          <path>app\controllers\activity</path>
+          <name>activity-list.js</name>
+        </file>
+        <file>
+          <path>app\controllers</path>
+          <name>admin.js</name>
+        </file>
+        <file>
+          <path>app\controllers</path>
+          <name>dashboard.js</name>
+        </file>
+        <file>
+          <path>app\controllers\user-activity</path>
+          <name>user-activity-delete.js</name>
+        </file>
+        <file>
+          <path>app\controllers\user-activity</path>
+          <name>user-activity-detail2.js</name>
+        </file>
+        <file>
+          <path>app\controllers\user-activity</path>
+          <name>user-activity-detail.js</name>
+        </file>
+        <file>
+          <path>app\controllers\user-activity</path>
+          <name>user-activity-edit.js</name>
+        </file>
+        <file>
+          <path>app\controllers\user-activity</path>
+          <name>user-activity-list.js</name>
+        </file>
+        <file>
+          <path>app\directives</path>
+          <name>admin.js</name>
+        </file>
+        <file>
+          <path>app\directives</path>
+          <name>dashboard.js</name>
+        </file>
+        <file>
+          <path>app\services</path>
+          <name>activity-type.js</name>
+        </file>
+        <file>
+          <path>app\services</path>
+          <name>user-activity.js</name>
+        </file>
+        <file>
+          <path>app\services</path>
+          <name>activity-setting.js</name>
+        </file>
+        <file>
+          <path>app\services</path>
+          <name>activity.js</name>
+        </file>
+        <file>
+          <path>app\views\activity-setting</path>
+          <name>activity-setting-edit.html</name>
+        </file>
+        <file>
+          <path>app\views\activity</path>
+          <name>activity-delete.html</name>
+        </file>
+        <file>
+          <path>app\views\activity</path>
+          <name>activity-edit.html</name>
+        </file>
+        <file>
+          <path>app\views\activity</path>
+          <name>activity-list.html</name>
+        </file>
+        <file>
+          <path>app\views</path>
+          <name>admin.html</name>
+        </file>
+        <file>
+          <path>app\views</path>
+          <name>dashboard.html</name>
+        </file>
+        <file>
+          <path>app\views\user-activity</path>
+          <name>user-activity-delete.html</name>
+        </file>
+        <file>
+          <path>app\views\user-activity</path>
+          <name>user-activity-detail2.html</name>
+        </file>
+        <file>
+          <path>app\views\user-activity</path>
+          <name>user-activity-detail.html</name>
+        </file>
+        <file>
+          <path>app\views\user-activity</path>
+          <name>user-activity-edit.html</name>
+        </file>
+        <file>
+          <path>app\views\user-activity</path>
+          <name>user-activity-list.html</name>
+        </file>
+        <file>
+          <name>Dashboard.ascx</name>
+        </file>
+        <file>
+          <name>Module.css</name>
+        </file>
+        <file>
+          <path>plugins\angular-toastr</path>
+          <name>angular-toastr.min.css</name>
+        </file>
+        <file>
+          <path>plugins\angular-toastr</path>
+          <name>angular-toastr.tpls.min.js</name>
+        </file>
+        <file>
+          <path>plugins\datetime-picker</path>
+          <name>datetime-picker.js</name>
+        </file>
+        <file>
+          <path>plugins\datetime-picker</path>
+          <name>datetime-picker.min.js</name>
+        </file>
+        <file>
+          <path>plugins\datetime-picker</path>
+          <name>datetime-picker.tpls.js</name>
+        </file>
+        <file>
+          <path>plugins\ui.bootstrap</path>
+          <name>ui-bootstrap-tpls-2.0.2.min.js</name>
+        </file>
+        <file>
+          <path>plugins\ui.bootstrap</path>
+          <name>ui-bootstrap-tpls-2.5.0.min.js</name>
+        </file>
+        <file>
+          <path>plugins\ui.bootstrap</path>
+          <name>ui-bootstrap-tpls.js</name>
+        </file>
+      </files>
+    </component>
+  </components>
+</package></packages>
+</dotnetnuke>

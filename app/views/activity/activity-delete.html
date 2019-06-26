@@ -1,0 +1,26 @@
+﻿<div class="modal-header">
+    <button class="btn btn-link text-muted float-right" ng-click="close()"><span class="fas fa-times" /></button>
+    <h3 class="modal-title">Delete '{{activity.name}}'</h3>
+</div>
+
+<div class="modal-body">
+
+    <p class="lead">
+        Deleting '{{activity.name}}' will also delete all points associated with '{{activity.name}}'.<br />
+        This action is irreversable.
+    </p>
+
+    <div class="form">
+        <div class="form-group">
+            <label for="name" class="control-label">Please enter the name of the source to confirm deletion.</label>
+            <input type="text" name="name" class="form-control" ng-model="activity_name" />
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-link pull-left" ng-click="close()">Cancel</button>
+    <button class="btn btn-danger" ng-click="deleteActivity()" ng-disabled="activity.name!=activity_name">Delete</button>
+</div>
+

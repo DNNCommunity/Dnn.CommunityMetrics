@@ -1,0 +1,49 @@
+﻿<div class="modal-header">
+    <button class="btn btn-link text-muted float-right" ng-click="close()"><span class="fas fa-times" /></button>
+    <h3 class="modal-title">User Activity for {{user_name}} </h3>
+    <h4 ng-show="period_start||period_end">Period Range: {{period_start|date}} - {{period_end|date}}</h4>
+</div>
+
+<div class="modal-body">
+
+    <div ng-show="loading" style="font-size: 60px; text-align: center;">
+        <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
+    </div>
+
+    <div ng-show="!loading">
+
+        <table class="table table-striped">
+            <colgroup>
+                <col />
+                <col />
+                <col />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Count</th>
+                    <th>Points Awarded</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user_activity in user_activities" ng-click="viewUserActivityDetail(user_activity)" style="cursor:pointer;">
+                    <td>
+                        {{user_activity.activity_name}}
+                    </td>
+                    <td>
+                        {{user_activity.count}}
+                    </td>
+                    <td>
+                        {{user_activity.total_points}}
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info" ng-show="(user_activities).length==0 ">No user activity found.</div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-link pull-left" ng-click="close()">Close</button>
+</div>

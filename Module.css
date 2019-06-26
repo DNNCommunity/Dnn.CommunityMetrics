@@ -1,0 +1,75 @@
+﻿
+.table td, .table th {
+    vertical-align: middle !important;
+}
+
+.table .dropdown-toggle {
+    visibility: hidden;
+}
+
+    .table .dropdown-toggle::after {
+        content: none;
+    }
+
+.table tr:hover .dropdown-toggle {
+    visibility: visible;
+}
+
+.tab-pane {
+    padding-top: 10px;
+}
+
+.modal-full {
+    position: absolute !important;
+    top: 20px;
+    left: 100px;
+    width: calc(100% - 140px) !important;
+    height: calc(100% - 40px);
+    max-width: none !important;
+}
+
+/* simulate invalde-feedback for controls that dont support HTML5 validation */
+.error.text-danger {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+.modal.fade.in {
+    opacity: 1;
+}
+
+.modal.fade .modal-dialog {
+    transform: translate(0, 0) !important;
+}
+
+.modal-backdrop.fade {
+    opacity: 0.5 !important;
+}
+
+.modal-header {
+    display: block !important;
+}
+
+.modal-content {
+    border-radius: 1.3rem !important;
+}
+
+
+ul.nav-tabs {
+    margin-left: 0;
+}
+
+
+[data-toggle="collapse"] {
+}
+
+    [data-toggle="collapse"] .fa-chevron-right {
+        line-height: 25px;
+    }
+
+    [data-toggle="collapse"][aria-expanded="true"] .fa-chevron-right:before {
+        content: "\f078";
+    }
+

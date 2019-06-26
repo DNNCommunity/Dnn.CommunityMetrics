@@ -1,0 +1,30 @@
+﻿<div class="modal-header">
+    <button class="btn btn-link text-muted float-right" ng-click="close()"><span class="fas fa-times" /></button>
+    <h3 class="modal-title">Edit Activity Setting</h3>
+</div>
+
+<div class="modal-body">
+
+    <div ng-show="loading" style="font-size: 60px; text-align: center;">
+        <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
+    </div>
+
+    <div ng-form="formActivitySetting" id="formActivitySetting" class="form" ng-show="!loading">
+
+        <div class="form-group">
+            <label for="value" class="control-label">{{activitySetting.name}}</label>
+            <textarea name="value" class="form-control" ng-model="activitySetting.value"></textarea>
+            <small class="form-text text-muted">
+                {{activitySetting.help_text}}
+            </small>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-link pull-left" ng-click="close()"><span ng-show="!formActivitySetting.$dirty">Close</span><span ng-show="formActivitySetting.$dirty">Cancel</span></button>
+    <button class="btn btn-primary" ng-click="saveActivitySetting()"><span ng-show="!activitySetting.id">Create</span><span ng-show="activitySetting.id">Save</span></button>
+</div>
+
+

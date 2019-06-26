@@ -1,0 +1,113 @@
+﻿
+<div ng-form="formDashboard" id="formPoints" class="form" ng-show="!loading">
+
+    <div class="form-row">
+        <div class="col">
+            <div class="form-group">
+                <div class="input-group">
+                    <input name="period_start" id="period_start" type="text" placeholder="mm/dd/yyyy" class="form-control" date-formatter uib-datepicker-popup="M!/d!/yyyy" ng-model="period_start" is-open="periodStartDateTimePicker.isOpen" datepicker-options="dateOptions" close-text="Close" />
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <a href="#" class="text-muted" ng-click="periodStartDateTimePicker.isOpen=!periodStartDateTimePicker.isOpen"><i class="fas fa-calendar"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <div class="input-group">
+                    <input name="period_end" id="period_end" type="text" placeholder="mm/dd/yyyy" class="form-control" date-formatter uib-datepicker-popup="M!/d!/yyyy" ng-model="period_end" is-open="periodEndDateTimePicker.isOpen" datepicker-options="dateOptions" close-text="Close" />
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <a href="#" class="text-muted" ng-click="periodEndDateTimePicker.isOpen=!periodEndDateTimePicker.isOpen"><i class="fas fa-calendar"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <input id="search" name="user_search" placeholder="User Search ..." class="form-control" ng-model="user_search" />
+            </div>
+        </div>
+
+        <div class="col-1">
+            <a href="#" class="btn btn-block btn-primary" ng-click="getUserActivities()">Search</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-sm btn-light" ng-click="thisYear()">This Year</button>
+            <button type="button" class="btn btn-sm btn-light" ng-click="thisMonth()">This Month</button>
+            <button type="button" class="btn btn-sm btn-light" ng-click="lastYear()">Last Year</button>
+            <button type="button" class="btn btn-sm btn-light" ng-click="lastMonth()">Last Month</button>
+            <button type="button" class="btn btn-sm btn-light" ng-click="allTime()">All Time</button>
+        </div>
+    </div>
+
+    <div ng-show="loading" style="font-size: 60px; text-align: center;">
+        <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
+    </div>
+
+    <div ng-show="!loading">
+
+        <table class="table table-striped">
+            <colgroup>
+                <col style="width: 1%;" />
+                <col />
+                <col style="width: 15%;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Total Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user_activity in user_activities | search: 'name':name_search" ng-click="viewUserActivityDetail(user_activity)" style="cursor:pointer;">
+                    <td>
+                        {{user_activity.rank+1}}
+                    </td>
+                    <td>
+                        {{user_activity.user_name}}
+                    </td>
+                    <td>
+                        {{user_activity.total_points}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info" ng-show="(user_activities | search: 'name':name_search).length==0 ">No records found.</div>
+
+
+        <hr />
+
+        <p>The following activity types are currently automatically tracked.  New acitivities types will be added as needed.  In addition, ad-hoc user activity may be awarded for community contributions that can not be automatically tracked.</p>
+        <table class="table table-sm">
+            <colgroup>
+                <col />
+                <col />
+                <col />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Activity Name</th>
+                    <th>Description</th>
+                    <th>Point Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="activity in activities | filter: {'active': true}">
+                    <td>{{activity.name}}</td>
+                    <td>{{activity.description}}</td>
+                    <td>{{activity.factor}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

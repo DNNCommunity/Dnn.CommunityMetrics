@@ -1,0 +1,105 @@
+﻿<div class="modal-header">
+    <button class="btn btn-link text-muted float-right" ng-click="close()"><span class="fas fa-times" /></button>
+    <h3 class="modal-title">Edit Activity</h3>
+</div>
+
+<div class="modal-body">
+
+    <div ng-show="loading" style="font-size: 60px; text-align: center;">
+        <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
+    </div>
+
+    <div ng-form="formActivity" id="formActivity" class="form" ng-show="!loading">
+
+        <div class="form-group">
+            <label for="name" class="control-label">Name <span class="text-danger">*</span></label>
+            <input type="text" name="name" class="form-control" ng-model="activity.name" required ng-class="{'is-invalid': formActivity.name.$invalid && submitted, 'is-valid': formActivity.name.$valid && submitted}" />
+            <div class="error text-danger" role="alert" ng-messages="formActivity.name.$error" ng-if="submitted" ng-cloak>
+                <div ng-message="required">This field is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="active" ng-model="activity.active">
+                <label class="custom-control-label" for="active">Active?</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="control-label">Description <span class="text-danger">*</span></label>
+            <textarea name="description" class="form-control" ng-model="activity.description" required ng-class="{'is-invalid': formActivity.description.$invalid && submitted, 'is-valid': formActivity.description.$valid && submitted}"></textarea>
+            <div class="error text-danger" role="alert" ng-messages="formActivity.description.$error" ng-if="submitted" ng-cloak>
+                <div ng-message="required">This field is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="type" class="control-label">Activity Type <span class="text-danger">*</span></label>
+            <select class="form-control" ng-model="activity.type_name" ng-options="activityType.full_name as activityType.name for activityType in activityTypes" required ng-change="typeChanged()"></select>
+            <div class="error text-danger" role="alert" ng-messages="formActivity.type.$error" ng-if="submitted" ng-cloak>
+                <div ng-message="required">This field is required</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="factor" class="control-label">Factor <span class="text-danger">*</span></label>
+            <input type="number" name="factor" class="form-control" ng-model="activity.factor" required ng-class="{'is-invalid': formActivity.factor.$invalid && submitted, 'is-valid': formActivity.factor.$valid && submitted}" min="0" />
+            <div class="error text-danger" role="alert" ng-messages="formActivity.factor.$error" ng-if="submitted" ng-cloak>
+                <div ng-message="required">This field is required</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="min_daily" class="control-label">Min Daily <span class="text-danger">*</span></label>
+                    <input type="number" name="min_daily" class="form-control" ng-model="activity.min_daily" required ng-class="{'is-invalid': formActivity.min_daily.$invalid && submitted, 'is-valid': formActivity.min_daily.$valid && submitted}" min="0" />
+                    <div class="error text-danger" role="alert" ng-messages="formActivity.min_daily.$error" ng-if="submitted" ng-cloak>
+                        <div ng-message="required">This field is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="max_daily" class="control-label">Max Daily <span class="text-danger">*</span></label>
+                    <input type="number" name="max_daily" class="form-control" ng-model="activity.max_daily" required ng-class="{'is-invalid': formActivity.max_daily.$invalid && submitted, 'is-valid': formActivity.max_daily.$valid && submitted}" min="0" />
+                    <div class="error text-danger" role="alert" ng-messages="formActivity.max_daily.$error" ng-if="submitted" ng-cloak>
+                        <div ng-message="required">This field is required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="activity.id>0">
+            <h3>Settings</h3>
+            <table class="table table-striped">
+                <colgroup><col /></colgroup>
+                <thead>
+                    <tr>
+                        <th>Setting Name</th>
+                        <th>Setting Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="setting in settings">
+                        <td>
+                            <a href="#" class="text-muted" title="Edit" ng-click="editSetting(setting)">{{setting.name}}</a>
+                        </td>
+                        <td>
+                            {{setting.value}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-link pull-left" ng-click="close()"><span ng-show="!formActivity.$dirty">Close</span><span ng-show="formActivity.$dirty">Cancel</span></button>
+    <button class="btn btn-primary" ng-click="saveActivity()"><span ng-show="!activity.id">Create</span><span ng-show="activity.id">Save</span></button>
+</div>
+
+

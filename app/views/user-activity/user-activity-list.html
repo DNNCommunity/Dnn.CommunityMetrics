@@ -1,0 +1,112 @@
+﻿<div class="modal-header">
+    <button class="btn btn-link text-muted float-right" ng-click="close()"><span class="fas fa-times" /></button>
+    <h3 class="modal-title">User Activity</h3>
+</div>
+
+<div class="modal-body">
+
+    <div ng-show="loading" style="font-size: 60px; text-align: center;">
+        <i class="fas fa-cog fa-spin fa-3x fa-fw"></i>
+    </div>
+
+    <div ng-show="!loading">
+
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group">
+                    <input id="search" name="user_id" placeholder="User ..." class="form-control" ng-model="user_id" />
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <select name="activity_id" ng-model="activity_id" class="form-control" ng-options="activity.id as activity.name for activity in activities" required ng-class="{'is-invalid': formPoints.activity_id.$invalid && submitted, 'is-valid': formPoints.activity_id.$valid && submitted}">
+                        <option value="">Activity ...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input name="period_start" id="period_start" type="text" placeholder="From Date ..." class="form-control" date-formatter uib-datepicker-popup="M!/d!/yyyy" ng-model="period_start" is-open="periodStartDateTimePicker.isOpen" datepicker-options="dateOptions" close-text="Close" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <a href="#" class="text-muted" ng-click="periodStartDateTimePicker.isOpen=!periodStartDateTimePicker.isOpen"><i class="fas fa-calendar"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input name="period_end" id="period_end" type="text" placeholder="To Date ..." class="form-control" date-formatter uib-datepicker-popup="M!/d!/yyyy" ng-model="period_end" is-open="periodEndDateTimePicker.isOpen" datepicker-options="dateOptions" close-text="Close" />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <a href="#" class="text-muted" ng-click="periodEndDateTimePicker.isOpen=!periodEndDateTimePicker.isOpen"><i class="fas fa-calendar"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-primary" ng-click="getUserActivity()">Search</button>
+            <button type="button" class="btn btn-secondary" ng-click="addUserActivity()">Add User Activity Manually</button>
+        </div>
+
+        <hr />
+
+        <table class="table table-striped">
+            <colgroup>
+                <col />
+                <col />
+                <col />
+                <col style="width: 1%;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Activity</th>
+                    <th>Date</th>
+                    <th>Points</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user_activity in user_activities | search: 'user_name':user_search">
+                    <td>
+                        {{user_activity.user_name}}
+                    </td>
+                    <td>
+                        {{user_activity.activity_name}}
+                    </td>
+                    <td>
+                        {{user_activity.date|date}}
+                    </td>
+                    <td>
+                        {{user_activity.count}}
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fas fa-ellipsis-h"></span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item text-muted" title="View" ng-click="editUserActivity(user_activity.id)"><span class="fas fa-edit" /> Edit</a>
+                                <a href="#" class="dropdown-item text-danger" title="Delete" ng-click="deleteUserActivity(user_activity)"><span class="fas fa-trash" /> Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info" ng-show="(user_activities | search: 'user_name':user_search).length==0 ">No user activity found.</div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-link pull-left" ng-click="close()">Close</button>
+</div>
