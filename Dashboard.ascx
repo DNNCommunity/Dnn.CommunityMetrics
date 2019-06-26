@@ -9,5 +9,3 @@
     var user_id = <%= UserId %>;
     var sf = $.ServicesFramework(module_id);
 </script>
-
-test
