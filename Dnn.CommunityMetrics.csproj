@@ -114,6 +114,8 @@
     <Compile Include="DTOs\ActivityTypeDTO.cs" />
     <Compile Include="DTOs\ActivitySettingDTO.cs" />
     <Compile Include="DTOs\ActivityDTO.cs" />
+    <Compile Include="DTOs\RankedUserActivityDTO.cs" />
+    <Compile Include="DTOs\DetailUserActivityDTO.cs" />
     <Compile Include="ModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

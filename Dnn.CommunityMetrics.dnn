@@ -1,5 +1,5 @@
 ﻿<dotnetnuke type="Package" version="5.0">
-  <packages><package name="Dnn.CommunityMetrics" type="Module" version="1.0.2">
+  <packages><package name="Dnn.CommunityMetrics" type="Module" version="1.0.4">
   <friendlyName>Dnn.CommunityMetrics</friendlyName>
   <description>Community Metrics</description>
   <iconFile>/Images/icon_extensions_32px.png</iconFile>

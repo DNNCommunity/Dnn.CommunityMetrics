@@ -158,7 +158,7 @@ namespace Dnn.CommunityMetrics
 
                 var list = query
                            .GroupBy(i => i.activity_id)
-                           .Select(g => new
+                           .Select(g => new DetailUserActivityDTO
                            {
                                activity_id = g.Key,
                                activity_name = g.Select(i => i.CommunityMetrics_Activity.name).FirstOrDefault(),
@@ -221,12 +221,12 @@ namespace Dnn.CommunityMetrics
                             .OrderByDescending(i => i.total_points)
                             .AsEnumerable();
 
-                var ranked_list = list.Select((a, b) => new
+                var ranked_list = list.Select((a, b) => new RankedUserActivityDTO()
                 {
-                    a.user_id,
                     rank = b,
-                    a.user_name,
-                    a.total_points
+                    user_id = a.user_id,
+                    user_name = a.user_name,
+                    total_points = a.total_points
                 }).AsEnumerable();
 
                 // user_search?
