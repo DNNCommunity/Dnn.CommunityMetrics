@@ -12,7 +12,8 @@ using System.Web.Http;
 
 namespace Dnn.CommunityMetrics
 {
-    //[SupportedModules("Dnn.CommunityMetrics")]
+    [SupportedModules("Dnn.CommunityMetrics")]
+    [ValidateAntiForgeryToken]
     public class UserActivityController : DnnApiController
     {
         DataContext dc = new DataContext();
@@ -70,6 +71,7 @@ namespace Dnn.CommunityMetrics
 
         // returns a list of user activity -  filter for user, activity, or time period
         [HttpGet]
+        [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
         [AllowAnonymous]
         public HttpResponseMessage Get(Nullable<int> user_id, Nullable<int> activity_id, Nullable<DateTime> period_start, Nullable<DateTime> period_end, Nullable<int> skip = null, Nullable<int> take = null)
         {
@@ -131,6 +133,7 @@ namespace Dnn.CommunityMetrics
 
         // returns a list of point grouped by activity - can filter for user or time period
         [HttpGet]
+        [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
         [AllowAnonymous]
         public HttpResponseMessage Get(Nullable<int> user_id, Nullable<DateTime> period_start, Nullable<DateTime> period_end, Nullable<int> skip = null, Nullable<int> take = null)
         {
@@ -191,6 +194,7 @@ namespace Dnn.CommunityMetrics
 
         // returns a ranked list of users for a given time period
         [HttpGet]
+        [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
         [AllowAnonymous]
         public HttpResponseMessage Get(string user_search, Nullable<DateTime> period_start, Nullable<DateTime> period_end, Nullable<int> skip = null, Nullable<int> take = null)
         {
@@ -257,6 +261,7 @@ namespace Dnn.CommunityMetrics
         }
 
         [HttpGet]
+        [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
         [AllowAnonymous]
         public HttpResponseMessage Get(int id)
         {
@@ -279,7 +284,6 @@ namespace Dnn.CommunityMetrics
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Edit)]
         public HttpResponseMessage Post(UserActivityDTO dto)
         {
@@ -302,7 +306,6 @@ namespace Dnn.CommunityMetrics
         }
 
         [HttpPut]
-        [ValidateAntiForgeryToken]
         [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Edit)]
         public HttpResponseMessage Put(UserActivityDTO dto)
         {
@@ -329,7 +332,6 @@ namespace Dnn.CommunityMetrics
         }
 
         [HttpDelete]
-        [ValidateAntiForgeryToken]
         [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Edit)]
         public HttpResponseMessage Delete(int id)
         {

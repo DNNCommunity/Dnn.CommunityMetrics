@@ -1,4 +1,5 @@
-﻿using DotNetNuke.Web.Api;
+﻿using DotNetNuke.Security;
+using DotNetNuke.Web.Api;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,13 +11,15 @@ using System.Web.Http;
 
 namespace Dnn.CommunityMetrics
 {
-    //[SupportedModules("Dnn.CommunityMetrics")]
+    [SupportedModules("Dnn.CommunityMetrics")]
+    [ValidateAntiForgeryToken]
     public class ActivityTypeController : DnnApiController
     {
         DataContext dc = new DataContext();
 
 
         [HttpGet]
+        [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
         [AllowAnonymous]
         public HttpResponseMessage Get()
         {
@@ -46,10 +49,7 @@ namespace Dnn.CommunityMetrics
                     }
                 }
             }
-
             return Request.CreateResponse(HttpStatusCode.OK, activityTypes);
         }
-
-
     }
 }

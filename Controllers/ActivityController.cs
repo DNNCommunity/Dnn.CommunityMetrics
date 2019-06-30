@@ -14,7 +14,8 @@ using System.Web.Http;
 
 namespace Dnn.CommunityMetrics
 {
-    //[SupportedModules("Dnn.CommunityMetrics")]
+    [SupportedModules("Dnn.CommunityMetrics")]
+    [ValidateAntiForgeryToken]
     public class ActivityController : DnnApiController
     {
         DataContext dc = new DataContext();
@@ -63,7 +64,7 @@ namespace Dnn.CommunityMetrics
             item.description = dto.description;
             item.type_name = dto.type_name;
             item.factor = dto.factor;
-            item.active = dto.active;            
+            item.active = dto.active;
             item.min_daily = dto.min_daily;
             item.max_daily = dto.max_daily;
 
@@ -72,6 +73,7 @@ namespace Dnn.CommunityMetrics
 
 
         [HttpGet]
+        [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
         [AllowAnonymous]
         public HttpResponseMessage Get()
         {
@@ -88,6 +90,7 @@ namespace Dnn.CommunityMetrics
         }
 
         [HttpGet]
+        [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.View)]
         [AllowAnonymous]
         public HttpResponseMessage Get(int id)
         {
@@ -110,7 +113,6 @@ namespace Dnn.CommunityMetrics
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Edit)]
         public HttpResponseMessage Post(ActivityDTO dto)
         {
@@ -128,7 +130,6 @@ namespace Dnn.CommunityMetrics
         }
 
         [HttpPut]
-        [ValidateAntiForgeryToken]
         [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Edit)]
         public HttpResponseMessage Put(ActivityDTO dto)
         {
@@ -146,7 +147,6 @@ namespace Dnn.CommunityMetrics
         }
 
         [HttpDelete]
-        [ValidateAntiForgeryToken]
         [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Edit)]
         public HttpResponseMessage Delete(int id)
         {
