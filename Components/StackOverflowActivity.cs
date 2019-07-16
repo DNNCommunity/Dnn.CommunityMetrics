@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using System.IO;
-using System.Web.Script.Serialization;
-using System.Linq;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web.Script.Serialization;
 
 namespace Dnn.CommunityMetrics
 {

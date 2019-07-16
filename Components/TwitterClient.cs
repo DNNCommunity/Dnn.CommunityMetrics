@@ -1,12 +1,12 @@
-﻿using System;
-using System.IO;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Security.Cryptography;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace Dnn.CommunityMetrics
 {
