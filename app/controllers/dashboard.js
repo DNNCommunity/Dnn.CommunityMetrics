@@ -1,7 +1,7 @@
 ﻿dnnCommunityMetrics.controller('dashboardController', ['$scope', '$q', 'toastr', '$uibModal', 'userActivityService', 'activityService', function ($scope, $q, toastr, $uibModal, userActivityService, activityService) {
 
-    $scope.period_start = new Date(2019, 0, 1);
-    $scope.period_end = new Date('6/1/2019');
+    $scope.period_start = new Date();
+    $scope.period_end = new Date();
     $scope.skip = 0;
     $scope.take = 50;
     $scope.user_search = '';
