@@ -64,8 +64,9 @@ class Build : NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
-            DotNetTasks.DotNetRestore(s => s
-                .SetProjectFile(Solution.GetProject(ProjectName)));
+            MSBuild(s => s
+                .SetProjectFile(Solution.GetProject(ProjectName))
+                .SetTargets("Restore"));
         });
 
     Target Compile => _ => _
