@@ -156,6 +156,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
     <Content Include="Admin.ascx" />
     <Content Include="app\app.js" />
     <Content Include="app\controllers\activity-setting\activity-setting-edit.js" />
@@ -207,7 +209,10 @@
     <None Include="DAL\CommunityMetrics.dbml.layout">
       <DependentUpon>CommunityMetrics.dbml</DependentUpon>
     </None>
+    <None Include="Dnn.CommunityMetrics.dnn" />
+    <None Include="LICENSE" />
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
