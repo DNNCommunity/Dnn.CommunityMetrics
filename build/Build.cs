@@ -23,7 +23,7 @@ using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 [GitHubActions(
     "Build",
-    GitHubActionsImage.UbuntuLatest,
+    GitHubActionsImage.WindowsLatest,
     ImportSecrets = new[] { nameof(GitHubToken) },
     OnPullRequestBranches = new[] { "develop", "main", "master", "release/" },
     OnPushBranches = new[] { "main", "master", "develop", "release/" },
