@@ -1,7 +1,6 @@
 using DotNetNuke.Abstractions.Portals;
 using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Users;
-using DotNetNuke.Security.Membership;
 using System;
 using System.Collections.Generic;
 using System.Linq;
