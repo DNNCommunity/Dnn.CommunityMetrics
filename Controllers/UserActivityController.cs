@@ -1,5 +1,4 @@
-﻿using DotNetNuke.Entities.Users;
-using DotNetNuke.Security;
+﻿using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Web.Api;
 using System;
