@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Community Metrics")]
 [assembly: AssemblyDescription("Community Metrics")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Hotcakes Commerce, LLC")]
+[assembly: AssemblyCompany("DNN Community")]
 [assembly: AssemblyProduct("Community Metrics")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright ©  DNN Community")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
