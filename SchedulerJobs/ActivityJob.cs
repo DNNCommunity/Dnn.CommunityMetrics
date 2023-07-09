@@ -1,5 +1,10 @@
+using DotNetNuke.Abstractions.Portals;
+using DotNetNuke.Entities.Portals;
+using DotNetNuke.Entities.Users;
+using DotNetNuke.Security.Membership;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dnn.CommunityMetrics
 {
@@ -65,7 +70,7 @@ namespace Dnn.CommunityMetrics
                                 }
                                 if (user_activity.count > 0)
                                 {
-                                    userActivityController.SaveUserActivity(user_activity);
+                                    this.SaveUserActivity(user_activity);
                                     intCount += 1;
                                 }
                             }
@@ -82,5 +87,45 @@ namespace Dnn.CommunityMetrics
             }
             return strMessage;
         }
+
+        private void SaveUserActivity(UserActivityDTO dto)
+        {
+            DataContext dc = new DataContext();
+
+            // prevents saving of duplicate activity
+            CommunityMetrics_UserActivity user_activity = dc.CommunityMetrics_UserActivities.Where(i => i.activity_id == dto.activity_id && i.user_id == dto.user_id && i.date == dto.date).SingleOrDefault();
+            if (user_activity == null)
+            {
+                user_activity = new CommunityMetrics_UserActivity()
+                {
+                    activity_id = dto.activity_id,
+                    user_id = dto.user_id
+                };
+                var userExists = false;
+                var portals = PortalController.Instance.GetPortals();
+                foreach (IPortalInfo portal in portals)
+                {
+                    var user = UserController.Instance.GetUser(portal.PortalId, dto.user_id);
+                    if (user != null)
+                    {
+                        userExists = true;
+                        break;
+                    }
+                }
+                if (!userExists)
+                {
+                    return;
+                }
+                dc.CommunityMetrics_UserActivities.InsertOnSubmit(user_activity);
+            }
+
+            user_activity.count = dto.count;
+            user_activity.notes = dto.notes;
+            user_activity.date = dto.date;
+            user_activity.created_on_date = DateTime.Now;
+
+            dc.SubmitChanges();
+        }
+
     }
 }

@@ -17,8 +17,8 @@
         <dependency type="CoreVersion">09.11.01</dependency>
       </dependencies>
       <components>
-		  <component type="Cleanup" version="01.01.00" glob="DesktopModules/Dnn.CommunityMetrics/**/*" />
-		  <component type="Script">
+        <component type="Cleanup" version="01.01.00" glob="DesktopModules/Dnn.CommunityMetrics/**/*" />
+        <component type="Script">
           <scripts>
             <basePath>DesktopModules\Dnn.CommunityMetrics</basePath>
             <script type="Install">

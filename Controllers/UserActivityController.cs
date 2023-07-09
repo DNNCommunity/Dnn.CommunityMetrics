@@ -1,4 +1,5 @@
-﻿using DotNetNuke.Security;
+﻿using DotNetNuke.Entities.Users;
+using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Web.Api;
 using System;
@@ -395,29 +396,6 @@ namespace Dnn.CommunityMetrics
             var user_activities = dc.CommunityMetrics_UserActivities.Where(i => i.activity_id == activity_id && i.user_id == user_id && i.date < date).ToList();
             var count = user_activities.Sum(i => i.count);
             return count;
-        }
-
-        [NonAction]
-        public void SaveUserActivity(UserActivityDTO dto)
-        {
-            // prevents saving of duplicate activity
-            CommunityMetrics_UserActivity user_activity = dc.CommunityMetrics_UserActivities.Where(i => i.activity_id == dto.activity_id && i.user_id == dto.user_id && i.date == dto.date).SingleOrDefault();
-            if (user_activity == null)
-            {
-                user_activity = new CommunityMetrics_UserActivity()
-                {
-                    activity_id = dto.activity_id,
-                    user_id = dto.user_id
-                };
-                dc.CommunityMetrics_UserActivities.InsertOnSubmit(user_activity);
-            }
-
-            user_activity.count = dto.count;
-            user_activity.notes = dto.notes;
-            user_activity.date = dto.date;
-            user_activity.created_on_date = DateTime.Now;
-
-            dc.SubmitChanges();
         }
     }
 }
