@@ -22,13 +22,13 @@ on:
       - main
       - master
       - develop
-      - release/
+      - 'release/*'
   pull_request:
     branches:
       - develop
       - main
       - master
-      - release/
+      - 'release/*'
 
 jobs:
   ubuntu-latest:
