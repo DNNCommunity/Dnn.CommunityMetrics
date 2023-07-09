@@ -25,8 +25,8 @@ using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
     "Build",
     GitHubActionsImage.UbuntuLatest,
     ImportSecrets = new[] { nameof(GitHubToken) },
-    OnPullRequestBranches = new[] { "develop", "main", "master", "release/" },
-    OnPushBranches = new[] { "main", "master", "develop", "release/" },
+    OnPullRequestBranches = new[] { "develop", "main", "master", "release/*" },
+    OnPushBranches = new[] { "main", "master", "develop", "release/*" },
     InvokedTargets = new[] { nameof(CI) },
     FetchDepth = 0
     )]
