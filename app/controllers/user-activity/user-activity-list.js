@@ -1,4 +1,4 @@
-﻿dnnCommunityMetrics.controller('userActivityListController', ['$scope', '$q', '$uibModal', '$uibModalInstance', 'toastr', 'activityService', 'userActivityService', function ($scope, $q, $uibModal, $uibModalInstance, toastr, activityService, userActivityService) {
+dnnCommunityMetrics.controller('userActivityListController', ['$scope', '$q', '$uibModal', '$uibModalInstance', 'toastr', 'activityService', 'userActivityService', function ($scope, $q, $uibModal, $uibModalInstance, toastr, activityService, userActivityService) {
 
     $scope.close = function () {
         $uibModalInstance.dismiss('cancel');
@@ -147,12 +147,20 @@
         return deferred.promise;
     };
 
-    $scope.thisYear = function () {
-        var now = new Date();
-        var year = now.getFullYear();
+    $scope.getCurrentDate = function () {
+        return new Date();
+    };
 
-        $scope.period_start = new Date(year, 0, 1);
-        $scope.period_end = new Date(year, 11, 31);
+    $scope.getDateOneYearAgo = function () {
+        var date = new Date();
+        date.setDate(date.getDate() - 365);
+        return date;
+    };
+
+    $scope.rollingYear = function () {
+        $scope.period_start = $scope.getDateOneYearAgo();
+        $scope.period_end = $scope.getCurrentDate();
+        $scope.getUserActivity();
     };
 
     init = function () {
@@ -161,7 +169,7 @@
         return $q.all(promises);
     };
     init();
-    $scope.thisYear();
+    $scope.rollingYear();
 
 }]);
 

@@ -1,7 +1,7 @@
 ﻿
 <div ng-form="formDashboard" id="formPoints" class="form" ng-show="!loading">
 
-    <div class="form-row mb-3 mb-lg-0">
+    <div class="row mb-3 gap-3 gap-lg-1 flex-end">
         <div class="col-12 col-lg-auto">
             <div class="form-group">
                 <div class="input-group">
@@ -32,13 +32,14 @@
             </div>
         </div>
 
-        <div class="col-12 col-lg-auto">
+        <div class="col-12 col-lg-auto d-flex flex-column">
             <a href="#" class="btn btn-block btn-primary" ng-click="getUserActivity()">Full Search</a>
         </div>
     </div>
 
     <div class="row">
         <div class="col">
+            <button type="button" class="btn btn-sm btn-light" ng-click="rollingYear()">Rolling Year</button>
             <button type="button" class="btn btn-sm btn-light" ng-click="thisYear()">This Year</button>
             <button type="button" class="btn btn-sm btn-light" ng-click="thisMonth()">This Month</button>
             <button type="button" class="btn btn-sm btn-light" ng-click="lastYear()">Last Year</button>
