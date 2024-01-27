@@ -147,13 +147,12 @@
         return deferred.promise;
     };
 
-    $scope.rollingYear = function () {
+    $scope.thisYear = function () {
         var now = new Date();
-        var yearAgo = now;
-        yearAgo.setDate(now.getDate() - 365);
+        var year = now.getFullYear();
 
-        $scope.period_end = now;
-        $scope.period_start = yearAgo;
+        $scope.period_start = new Date(year, 0, 1);
+        $scope.period_end = new Date(year, 11, 31);
     };
 
     init = function () {
@@ -162,7 +161,7 @@
         return $q.all(promises);
     };
     init();
-    $scope.rollingYear();
+    $scope.thisYear();
 
 }]);
 
