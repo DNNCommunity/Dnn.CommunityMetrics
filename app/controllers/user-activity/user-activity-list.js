@@ -147,13 +147,20 @@
         return deferred.promise;
     };
 
-    $scope.rollingYear = function () {
-        var now = new Date();
-        var yearAgo = now;
-        yearAgo.setDate(now.getDate() - 365);
+    $scope.getCurrentDate = function () {
+        return new Date();
+    };
 
-        $scope.period_end = now;
-        $scope.period_start = yearAgo;
+    $scope.getDateOneYearAgo = function () {
+        var date = new Date();
+        date.setDate(date.getDate() - 365);
+        return date;
+    };
+
+    $scope.rollingYear = function () {
+        $scope.period_start = $scope.getDateOneYearAgo();
+        $scope.period_end = $scope.getCurrentDate();
+        $scope.getUserActivity();
     };
 
     init = function () {
