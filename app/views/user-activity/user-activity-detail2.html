@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="user_activity in user_activities">
+                <tr ng-repeat="user_activity in user_activities | orderBy: '-date'">
                     <td>
                         {{user_activity.date|date}}
                     </td>                    
