@@ -8,7 +8,7 @@
                     <input name="period_start" id="period_start" type="text" placeholder="mm/dd/yyyy" class="form-control" date-formatter uib-datepicker-popup="M!/d!/yyyy" ng-model="period_start" is-open="periodStartDateTimePicker.isOpen" datepicker-options="dateOptions" close-text="Close" />
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <a href="#" class="text-muted" ng-click="periodStartDateTimePicker.isOpen=!periodStartDateTimePicker.isOpen"><i class="fas fa-calendar"></i></a>
+                            <a href="#" class="text-muted" ng-click="$event.preventDefault(); periodStartDateTimePicker.isOpen=!periodStartDateTimePicker.isOpen"><i class="fas fa-calendar"></i></a>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <input name="period_end" id="period_end" type="text" placeholder="mm/dd/yyyy" class="form-control" date-formatter uib-datepicker-popup="M!/d!/yyyy" ng-model="period_end" is-open="periodEndDateTimePicker.isOpen" datepicker-options="dateOptions" close-text="Close" />
                     <div class="input-group-append">
                         <div class="input-group-text">
-                            <a href="#" class="text-muted" ng-click="periodEndDateTimePicker.isOpen=!periodEndDateTimePicker.isOpen"><i class="fas fa-calendar"></i></a>
+                            <a href="#" class="text-muted" ng-click="$event.preventDefault(); periodEndDateTimePicker.isOpen=!periodEndDateTimePicker.isOpen"><i class="fas fa-calendar"></i></a>
                         </div>
                     </div>
                 </div>
