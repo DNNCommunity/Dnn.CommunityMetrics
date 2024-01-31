@@ -11,7 +11,7 @@
 
     <div ng-show="!loading">
 
-        <div class="form-row">
+        <div class="row mb-3">
             <div class="col">
                 <div class="form-group">
                     <input id="search" name="user_id" placeholder="User ..." class="form-control" ng-model="user_id" />
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="d-flex flex-column gap-3">
             <button type="button" class="btn btn-primary" ng-click="getUserActivity()">Search</button>
             <button type="button" class="btn btn-secondary" ng-click="addUserActivity()">Add User Activity Manually</button>
         </div>
@@ -78,7 +78,7 @@
             <tbody>
                 <tr ng-repeat="user_activity in user_activities | search: 'user_name':user_search">
                     <td>
-                        {{user_activity.user_name}}
+                        <img class="rounded-circle me-1" title="{{user_activity.user_name}} Avatar" src="/DnnImageHandler.ashx?mode=profilepic&amp;userId={{user_activity.user_id}}0&amp;h=40&amp;w=40&amp;" alt="{{user_activity.user_name}} Avatar"> {{user_activity.user_name}}
                     </td>
                     <td>
                         {{user_activity.activity_name}}
