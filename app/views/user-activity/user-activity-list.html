@@ -76,7 +76,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="user_activity in user_activities | search: 'user_name':user_search">
+                <tr ng-repeat="user_activity in user_activities | search: 'user_name':user_search | orderBy: '-date'">
                     <td>
                         <img class="rounded-circle me-1" title="{{user_activity.user_name}} Avatar" src="/DnnImageHandler.ashx?mode=profilepic&amp;userId={{user_activity.user_id}}0&amp;h=40&amp;w=40&amp;" alt="{{user_activity.user_name}} Avatar"> {{user_activity.user_name}}
                     </td>
