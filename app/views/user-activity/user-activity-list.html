@@ -20,7 +20,7 @@
 
             <div class="col">
                 <div class="form-group">
-                    <select name="activity_id" ng-model="activity_id" class="form-control" ng-options="activity.id as activity.name for activity in activities" required ng-class="{'is-invalid': formPoints.activity_id.$invalid && submitted, 'is-valid': formPoints.activity_id.$valid && submitted}">
+                    <select name="activity_id" ng-model="activity_id" class="form-select" ng-options="activity.id as activity.name for activity in activities" required ng-class="{'is-invalid': formPoints.activity_id.$invalid && submitted, 'is-valid': formPoints.activity_id.$valid && submitted}">
                         <option value="">Activity ...</option>
                     </select>
                 </div>
