@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dnncommunity" EntityNamespace="Dnn.CommunityMetrics" ContextNamespace="Dnn.CommunityMetrics" Class="DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=NV-PC07;Initial Catalog=dnncommunity;Integrated Security=True;Encrypt=True;Trust Server Certificate=True" SettingsObjectName="Dnn.CommunityMetrics.Properties.Settings" SettingsPropertyName="dnncommunityConnectionString" Provider="System.Data.SqlClient" />
+<?xml version="1.0" encoding="utf-8"?><Database Name="dnn9" EntityNamespace="Dnn.CommunityMetrics" ContextNamespace="Dnn.CommunityMetrics" Class="DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=dnn9;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SiteSqlServer" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Users" Member="Users">
     <Type Name="User">
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
