@@ -22,7 +22,7 @@ namespace Dnn.CommunityMetrics
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="dnncommunity")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="dnn9")]
 	public partial class DataContext : System.Data.Linq.DataContext
 	{
 		
