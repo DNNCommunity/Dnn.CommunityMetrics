@@ -80,31 +80,35 @@ namespace Dnn.CommunityMetrics
 
                         var recent_issues = issues
                             .Where(i =>
-                            i.User != null &&
-                            i.User.Login == user_profile.gitHub_login &&
-                            i.CreatedAt.Date > last_activity_date.GetValueOrDefault() &&
-                            i.CreatedAt.Date < DateTime.Now.Date
+                                i.User != null &&
+                                i.User.Login == user_profile.gitHub_login &&
+                                i.CreatedAt.Date > last_activity_date.GetValueOrDefault() &&
+                                i.CreatedAt.Date < DateTime.Now.Date &&
+                                i.PullRequest == null
                             );
 
                         foreach (Issue issue in recent_issues)
                         {
-                            if (issue.PullRequest == null) // exclude issues which are automatically generated for pull requests
-                            {
-                                var user_activity = user_activities.Where(i => i.user_id == user_profile.user_id && i.date == issue.CreatedAt.Date).SingleOrDefault();
+                            var user_activity = user_activities.Where(i => i.user_id == user_profile.user_id && i.date == issue.CreatedAt.Date).SingleOrDefault();
 
-                                if (user_activity == null)
+                            if (user_activity == null)
+                            {
+                                user_activity = new UserActivityDTO()
                                 {
-                                    user_activity = new UserActivityDTO()
-                                    {
-                                        user_id = user_profile.user_id,
-                                        activity_id = activity.id,
-                                        count = 0,
-                                        date = issue.CreatedAt.Date
-                                    };
-                                    user_activities.Add(user_activity);
-                                }
-                                user_activity.count++;
+                                    user_id = user_profile.user_id,
+                                    activity_id = activity.id,
+                                    count = 0,
+                                    date = issue.CreatedAt.Date,
+                                };
+                                user_activities.Add(user_activity);
                             }
+                            user_activity.count++;
+                            user_activity.links.Add(new UserActivityDTO.Link
+                            {
+                                user_activity_id = user_activity.id,
+                                text = issue.Title,
+                                href = issue.HtmlUrl
+                            });
                         }
                     }
                 }

@@ -26,6 +26,11 @@
               <name>01.00.00.sql</name>
               <version>01.00.00</version>
             </script>
+            <script type="Install">
+              <path>Scripts</path>
+              <name>01.03.00.sql</name>
+              <version>01.03.00</version>
+            </script>
           </scripts>
         </component>
         <component type="Module">

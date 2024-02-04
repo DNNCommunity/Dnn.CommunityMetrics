@@ -120,6 +120,15 @@ namespace Dnn.CommunityMetrics
 
             user_activity.count = dto.count;
             user_activity.notes = dto.notes;
+            dto.links.ToList().ForEach(i =>
+            {
+                CommunityMetrics_UserActivityLink link = new CommunityMetrics_UserActivityLink()
+                {
+                    text = i.text,
+                    href = i.href
+                };
+                user_activity.CommunityMetrics_UserActivityLinks.Add(link);
+            });
             user_activity.date = dto.date;
             user_activity.created_on_date = DateTime.Now;
 
