@@ -80,12 +80,12 @@ namespace Dnn.CommunityMetrics
 
                         var recent_pull_requests = pull_requests
                           .Where(i =>
-                          i.User != null &&
-                          i.User.Login == user_profile.gitHub_login &&
-                          i.CreatedAt.Date > last_activity_date.GetValueOrDefault() &&
-                          i.CreatedAt.Date < DateTime.Now.Date &&
-                          i.Merged == true &&
-                          i.MergedAt.HasValue
+                              i.User != null &&
+                              i.User.Login == user_profile.gitHub_login &&
+                              i.CreatedAt.Date > last_activity_date.GetValueOrDefault() &&
+                              i.CreatedAt.Date < DateTime.Now.Date &&
+                              i.Merged == true &&
+                              i.MergedAt.HasValue
                           );
 
                         foreach (PullRequest pull_request in recent_pull_requests)
@@ -100,11 +100,17 @@ namespace Dnn.CommunityMetrics
                                     user_id = user_profile.user_id,
                                     activity_id = activity.id,
                                     count = 0,
-                                    date = pull_request.CreatedAt.Date
+                                    date = pull_request.CreatedAt.Date,
                                 };
                                 user_activities.Add(user_activity);
                             }
                             user_activity.count++;
+                            user_activity.links.Add(new UserActivityDTO.Link
+                            {
+                                user_activity_id = user_activity.id,
+                                text = pull_request.Title,
+                                href = pull_request.HtmlUrl
+                            });
                         }
                     }
                 }

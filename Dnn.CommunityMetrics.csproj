@@ -143,6 +143,7 @@
     <Content Include="plugins\ui.bootstrap\ui-bootstrap-tpls-2.5.0.min.js" />
     <Content Include="plugins\ui.bootstrap\ui-bootstrap-tpls.js" />
     <Content Include="Scripts\01.00.00.sql" />
+    <Content Include="Scripts\01.03.00.sql" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DAL\CommunityMetrics.dbml">

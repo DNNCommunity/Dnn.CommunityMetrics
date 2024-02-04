@@ -59,18 +59,31 @@
         <elementListCompartment Id="cef6f9f1-e194-4cdc-8e29-570560a8487d" absoluteBounds="11.015, 3.96, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(11 : 4.70274983723958); (8.25 : 4.70274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(11 : 4.70274983723958); (8.25 : 4.70274983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataContext/CommunityMetrics_Activity/CommunityMetrics_Activity_CommunityMetrics_UserActivity" />
       <nodes>
         <classShapeMoniker Id="4672f451-a968-4966-8cc8-2860124a2013" />
         <classShapeMoniker Id="2dfd4d1a-a02f-46b3-a304-5886dc8f0e3b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(12.0625 : 7.00160970052083); (12.0625 : 8.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(12.0625 : 7.00160970052083); (12.0625 : 8.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataContext/CommunityMetrics_Activity/CommunityMetrics_Activity_CommunityMetrics_ActivitySetting" />
       <nodes>
         <classShapeMoniker Id="4672f451-a968-4966-8cc8-2860124a2013" />
         <classShapeMoniker Id="2c08fb53-9073-4951-98de-1213657e0bca" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1cf58e69-4dd7-4488-9b70-e77fead9a688" absoluteBounds="8, 7.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DataContext/CommunityMetrics_UserActivityLink" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a032565e-d4d9-432f-8c5b-77fa502f385a" absoluteBounds="8.015, 7.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.1249995 : 5.78049967447917); (7.1249995 : 8.28929768880208); (8 : 8.28929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/DataContext/CommunityMetrics_UserActivity/CommunityMetrics_UserActivity_CommunityMetrics_UserActivityLink" />
+      <nodes>
+        <classShapeMoniker Id="2dfd4d1a-a02f-46b3-a304-5886dc8f0e3b" />
+        <classShapeMoniker Id="1cf58e69-4dd7-4488-9b70-e77fead9a688" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

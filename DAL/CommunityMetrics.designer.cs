@@ -48,6 +48,9 @@ namespace Dnn.CommunityMetrics
     partial void InsertCommunityMetrics_Activity(CommunityMetrics_Activity instance);
     partial void UpdateCommunityMetrics_Activity(CommunityMetrics_Activity instance);
     partial void DeleteCommunityMetrics_Activity(CommunityMetrics_Activity instance);
+    partial void InsertCommunityMetrics_UserActivityLink(CommunityMetrics_UserActivityLink instance);
+    partial void UpdateCommunityMetrics_UserActivityLink(CommunityMetrics_UserActivityLink instance);
+    partial void DeleteCommunityMetrics_UserActivityLink(CommunityMetrics_UserActivityLink instance);
     #endregion
 		
 		public DataContext() : 
@@ -125,6 +128,14 @@ namespace Dnn.CommunityMetrics
 			get
 			{
 				return this.GetTable<CommunityMetrics_Activity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CommunityMetrics_UserActivityLink> CommunityMetrics_UserActivityLinks
+		{
+			get
+			{
+				return this.GetTable<CommunityMetrics_UserActivityLink>();
 			}
 		}
 	}
@@ -1485,6 +1496,8 @@ namespace Dnn.CommunityMetrics
 		
 		private System.DateTime _created_on_date;
 		
+		private EntitySet<CommunityMetrics_UserActivityLink> _CommunityMetrics_UserActivityLinks;
+		
 		private EntityRef<User> _User;
 		
 		private EntityRef<CommunityMetrics_Activity> _CommunityMetrics_Activity;
@@ -1511,6 +1524,7 @@ namespace Dnn.CommunityMetrics
 		
 		public CommunityMetrics_UserActivity()
 		{
+			this._CommunityMetrics_UserActivityLinks = new EntitySet<CommunityMetrics_UserActivityLink>(new Action<CommunityMetrics_UserActivityLink>(this.attach_CommunityMetrics_UserActivityLinks), new Action<CommunityMetrics_UserActivityLink>(this.detach_CommunityMetrics_UserActivityLinks));
 			this._User = default(EntityRef<User>);
 			this._CommunityMetrics_Activity = default(EntityRef<CommunityMetrics_Activity>);
 			OnCreated();
@@ -1664,6 +1678,19 @@ namespace Dnn.CommunityMetrics
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CommunityMetrics_UserActivity_CommunityMetrics_UserActivityLink", Storage="_CommunityMetrics_UserActivityLinks", ThisKey="id", OtherKey="user_activity_id")]
+		public EntitySet<CommunityMetrics_UserActivityLink> CommunityMetrics_UserActivityLinks
+		{
+			get
+			{
+				return this._CommunityMetrics_UserActivityLinks;
+			}
+			set
+			{
+				this._CommunityMetrics_UserActivityLinks.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_CommunityMetrics_UserActivity", Storage="_User", ThisKey="user_id", OtherKey="UserID", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
 		public User User
 		{
@@ -1750,6 +1777,18 @@ namespace Dnn.CommunityMetrics
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_CommunityMetrics_UserActivityLinks(CommunityMetrics_UserActivityLink entity)
+		{
+			this.SendPropertyChanging();
+			entity.CommunityMetrics_UserActivity = this;
+		}
+		
+		private void detach_CommunityMetrics_UserActivityLinks(CommunityMetrics_UserActivityLink entity)
+		{
+			this.SendPropertyChanging();
+			entity.CommunityMetrics_UserActivity = null;
 		}
 	}
 	
@@ -2355,6 +2394,181 @@ namespace Dnn.CommunityMetrics
 		{
 			this.SendPropertyChanging();
 			entity.CommunityMetrics_Activity = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CommunityMetrics_UserActivityLinks")]
+	public partial class CommunityMetrics_UserActivityLink : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _id;
+		
+		private long _user_activity_id;
+		
+		private string _text;
+		
+		private string _href;
+		
+		private EntityRef<CommunityMetrics_UserActivity> _CommunityMetrics_UserActivity;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(long value);
+    partial void OnidChanged();
+    partial void Onuser_activity_idChanging(long value);
+    partial void Onuser_activity_idChanged();
+    partial void OntextChanging(string value);
+    partial void OntextChanged();
+    partial void OnhrefChanging(string value);
+    partial void OnhrefChanged();
+    #endregion
+		
+		public CommunityMetrics_UserActivityLink()
+		{
+			this._CommunityMetrics_UserActivity = default(EntityRef<CommunityMetrics_UserActivity>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="BigInt NOT NULL", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_activity_id", DbType="BigInt NOT NULL")]
+		public long user_activity_id
+		{
+			get
+			{
+				return this._user_activity_id;
+			}
+			set
+			{
+				if ((this._user_activity_id != value))
+				{
+					if (this._CommunityMetrics_UserActivity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onuser_activity_idChanging(value);
+					this.SendPropertyChanging();
+					this._user_activity_id = value;
+					this.SendPropertyChanged("user_activity_id");
+					this.Onuser_activity_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_text", DbType="nvarchar(255)")]
+		public string text
+		{
+			get
+			{
+				return this._text;
+			}
+			set
+			{
+				if ((this._text != value))
+				{
+					this.OntextChanging(value);
+					this.SendPropertyChanging();
+					this._text = value;
+					this.SendPropertyChanged("text");
+					this.OntextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_href", DbType="nvarchar(255)")]
+		public string href
+		{
+			get
+			{
+				return this._href;
+			}
+			set
+			{
+				if ((this._href != value))
+				{
+					this.OnhrefChanging(value);
+					this.SendPropertyChanging();
+					this._href = value;
+					this.SendPropertyChanged("href");
+					this.OnhrefChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CommunityMetrics_UserActivity_CommunityMetrics_UserActivityLink", Storage="_CommunityMetrics_UserActivity", ThisKey="user_activity_id", OtherKey="id", IsForeignKey=true)]
+		public CommunityMetrics_UserActivity CommunityMetrics_UserActivity
+		{
+			get
+			{
+				return this._CommunityMetrics_UserActivity.Entity;
+			}
+			set
+			{
+				CommunityMetrics_UserActivity previousValue = this._CommunityMetrics_UserActivity.Entity;
+				if (((previousValue != value) 
+							|| (this._CommunityMetrics_UserActivity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CommunityMetrics_UserActivity.Entity = null;
+						previousValue.CommunityMetrics_UserActivityLinks.Remove(this);
+					}
+					this._CommunityMetrics_UserActivity.Entity = value;
+					if ((value != null))
+					{
+						value.CommunityMetrics_UserActivityLinks.Add(this);
+						this._user_activity_id = value.id;
+					}
+					else
+					{
+						this._user_activity_id = default(long);
+					}
+					this.SendPropertyChanged("CommunityMetrics_UserActivity");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

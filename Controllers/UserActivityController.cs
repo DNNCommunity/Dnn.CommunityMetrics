@@ -42,6 +42,13 @@ namespace Dnn.CommunityMetrics
 
             dto.activity_name = item.CommunityMetrics_Activity.name;
 
+            dto.links = item.CommunityMetrics_UserActivityLinks.Select(i => new UserActivityDTO.Link()
+            {
+                user_activity_id = i.user_activity_id,
+                text = i.text,
+                href = i.href
+            }).ToList();
+
             return dto;
         }
         [NonAction]

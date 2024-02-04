@@ -1,8 +1,4 @@
 ﻿
-.table td, .table th {
-    vertical-align: middle !important;
-}
-
 .table .dropdown-toggle {
     visibility: hidden;
 }
