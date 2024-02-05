@@ -1,4 +1,4 @@
-﻿dnnCommunityMetrics.controller('userActivityListController', ['$scope', '$q', '$uibModal', '$uibModalInstance', 'toastr', 'activityService', 'userActivityService', function ($scope, $q, $uibModal, $uibModalInstance, toastr, activityService, userActivityService) {
+dnnCommunityMetrics.controller('userActivityListController', ['$scope', '$q', '$uibModal', '$uibModalInstance', 'toastr', 'activityService', 'userActivityService', function ($scope, $q, $uibModal, $uibModalInstance, toastr, activityService, userActivityService) {
 
     $scope.close = function () {
         $uibModalInstance.dismiss('cancel');
