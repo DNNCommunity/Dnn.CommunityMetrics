@@ -1,9 +1,13 @@
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Build.Tasks;
 using Nuke.Common;
+using Nuke.Common.ChangeLog;
 using Nuke.Common.CI;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
@@ -12,13 +16,17 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.Git;
+using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Octokit;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
+using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 [GitHubActions(
@@ -43,7 +51,8 @@ class Build : NukeBuild
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
-    readonly string GitHubToken;
+
+    [Parameter("Github Token")] readonly string GitHubToken;
 
     [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
@@ -53,7 +62,11 @@ class Build : NukeBuild
     AbsolutePath DnnBinDirectory => RootDirectory.Parent.Parent / "bin";
 
     private string ProjectName = "Dnn.CommunityMetrics";
-    
+    private string releaseNotes;
+
+    GitHubClient gitHubClient;
+    Release release;
+
     Target Clean => _ => _
         .Before(Restore)
         .Executes(() =>
@@ -93,6 +106,7 @@ class Build : NukeBuild
     Target Package => _ => _
         .DependsOn(Clean)
         .DependsOn(Compile)
+        .Before(Release)
         .Executes(() =>
         {
             var stagingDirectory = RootDirectory / "staging";
@@ -120,6 +134,7 @@ class Build : NukeBuild
 
     Target CI => _ => _
         .DependsOn(Package)
+        .DependsOn(Release)
         .Produces(ArtifactsDirectory)
         .Executes(() =>
         {
@@ -165,4 +180,135 @@ class Build : NukeBuild
             }
         });
 
+    Target GenerateReleaseNotes => _ => _
+        .OnlyWhenDynamic(() => GitRepository.IsOnMainOrMasterBranch() || GitRepository.IsOnReleaseBranch())
+        .OnlyWhenDynamic(() => !string.IsNullOrWhiteSpace(GitHubToken))
+        .DependsOn(SetupGitHubClient)
+        .Executes(() =>
+        {
+            // Get the milestone
+            var milestone = gitHubClient.Issue.Milestone.GetAllForRepository(
+                GitRepository.GetGitHubOwner(),
+                GitRepository.GetGitHubName()).Result
+                .Where(m => m.Title == GitVersion.MajorMinorPatch).FirstOrDefault();
+            Serilog.Log.Information(milestone.ToJson());
+            if (milestone == null)
+            {
+                Serilog.Log.Warning("Milestone not found for this version");
+                releaseNotes = "No release notes for this version.";
+                return;
+            }
+
+            try
+            {
+                // Get the PRs
+                var prRequest = new PullRequestRequest()
+                {
+                    State = ItemStateFilter.All
+                };
+                var allPrs = Task.Run(() =>
+                    gitHubClient.Repository.PullRequest.GetAllForRepository(
+                            GitRepository.GetGitHubOwner(),
+                        GitRepository.GetGitHubName(), prRequest)
+                ).Result;
+
+                var pullRequests = allPrs.Where(p =>
+                    p.Milestone?.Title == milestone.Title &&
+                    p.Merged == true &&
+                    p.Milestone?.Title == GitVersion.MajorMinorPatch);
+                Serilog.Log.Information(pullRequests.ToJson());
+
+                // Build release notes
+                var releaseNotesBuilder = new StringBuilder();
+                releaseNotesBuilder
+                    .AppendLine($"# {GitRepository.GetGitHubName()} {milestone.Title}")
+                    .AppendLine()
+                    .AppendLine($"A total of {pullRequests.Count()} pull requests where merged in this release.")
+                    .AppendLine();
+
+                foreach (var group in pullRequests.GroupBy(p => p.Labels[0]?.Name, (label, prs) => new { label, prs }))
+                {
+                    Serilog.Log.Information(group.ToJson());
+                    releaseNotesBuilder.AppendLine($"## {group.label}");
+                    foreach (var pr in group.prs)
+                    {
+                        Serilog.Log.Information(pr.ToJson());
+                        releaseNotesBuilder.AppendLine($"- #{pr.Number} {pr.Title}. Thanks @{pr.User.Login}");
+                    }
+                }
+
+                releaseNotes = releaseNotesBuilder.ToString();
+                Serilog.Log.Information(releaseNotes);
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error(ex, "Something went wrong with the github api call.");
+                throw;
+            }
+        });
+
+    Target Release => _ => _
+        .OnlyWhenDynamic(() => GitRepository != null && (GitRepository.IsOnMainOrMasterBranch() || GitRepository.IsOnReleaseBranch()))
+        .OnlyWhenDynamic(() => !string.IsNullOrWhiteSpace(GitHubToken))
+        .DependsOn(SetupGitHubClient)
+        .DependsOn(GenerateReleaseNotes)
+        .DependsOn(TagRelease)
+        .DependsOn(Package)
+        .OnlyWhenDynamic(() => GitRepository.IsOnMainOrMasterBranch() || GitRepository.IsOnReleaseBranch())
+        .Executes(() =>
+        {
+            var newRelease = new NewRelease(GitRepository.IsOnMainOrMasterBranch() ? $"v{GitVersion.MajorMinorPatch}" : $"v{GitVersion.SemVer}")
+            {
+                Body = releaseNotes,
+                Draft = true,
+                Name = GitRepository.IsOnMainOrMasterBranch() ? $"v{GitVersion.MajorMinorPatch}" : $"v{GitVersion.SemVer}",
+                TargetCommitish = GitVersion.Sha,
+                Prerelease = GitRepository.IsOnReleaseBranch(),
+            };
+            release = gitHubClient.Repository.Release.Create(
+                GitRepository.GetGitHubOwner(),
+                GitRepository.GetGitHubName(),
+                newRelease).Result;
+            Serilog.Log.Information($"{release.Name} released !");
+
+            var artifactFile = RootDirectory.GlobFiles("artifacts/**/*.zip").FirstOrDefault();
+            var artifact = File.OpenRead(artifactFile);
+            var artifactInfo = new FileInfo(artifactFile);
+            var assetUpload = new ReleaseAssetUpload()
+            {
+                FileName = artifactInfo.Name,
+                ContentType = "application/zip",
+                RawData = artifact
+            };
+            var asset = gitHubClient.Repository.Release.UploadAsset(release, assetUpload).Result;
+            Serilog.Log.Information($"Asset {asset.Name} published at {asset.BrowserDownloadUrl}");
+        });
+
+    Target TagRelease => _ => _
+        .OnlyWhenDynamic(() => GitRepository != null && (GitRepository.IsOnMainOrMasterBranch() || GitRepository.IsOnReleaseBranch()))
+        .OnlyWhenDynamic(() => !string.IsNullOrWhiteSpace(GitHubToken))
+        .DependsOn(SetupGitHubClient)
+        .Before(Compile)
+        .Executes(() =>
+        {
+            Git($"remote set-url origin https://{GitRepository.GetGitHubOwner()}:{GitHubToken}@github.com/{GitRepository.GetGitHubOwner()}/{GitRepository.GetGitHubName()}.git");
+            var version = GitRepository.IsOnMainOrMasterBranch() ? GitVersion.MajorMinorPatch : GitVersion.SemVer;
+            GitLogger = (type, output) => Serilog.Log.Information(output);
+            Git($"tag v{version}");
+            Git($"push --tags");
+        });
+
+    Target SetupGitHubClient => _ => _
+        .OnlyWhenDynamic(() => !string.IsNullOrWhiteSpace(GitHubToken))
+        .OnlyWhenDynamic(() => GitRepository != null)
+        .Executes(() =>
+        {
+            Serilog.Log.Information($"We are on branch {GitRepository.Branch}");
+            if (GitRepository.IsOnMainOrMasterBranch() || GitRepository.IsOnReleaseBranch())
+            {
+                gitHubClient = new GitHubClient(new ProductHeaderValue("Nuke"));
+                var tokenAuth = new Credentials(GitHubToken);
+                gitHubClient.Credentials = tokenAuth;
+            }
+        });
 }
