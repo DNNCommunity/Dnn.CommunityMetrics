@@ -22,15 +22,21 @@
                 <tr>
                     <th>Date</th>
                     <th>Count</th>
+                    <th>Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="user_activity in user_activities">
-                    <td>
+                <tr ng-repeat="user_activity in user_activities | orderBy: '-date'">
+                    <td class="text-nowrap">
                         {{user_activity.date|date}}
                     </td>                    
                     <td>
                         {{user_activity.count}}
+                    </td>
+                    <td>
+                        <ul ng-repeat="link in user_activity.links" class="ps-4 mb-1">
+                            <li><a href="{{link.href}}" target="_blank">{{link.text}}</a></li>
+                        </ul>
                     </td>
                 </tr>
             </tbody>

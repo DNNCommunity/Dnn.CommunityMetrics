@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dnn9" EntityNamespace="Dnn.CommunityMetrics" ContextNamespace="Dnn.CommunityMetrics" Class="DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+<?xml version="1.0" encoding="utf-8"?><Database Name="dnn9" EntityNamespace="Dnn.CommunityMetrics" ContextNamespace="Dnn.CommunityMetrics" Class="DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=dnn9;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SiteSqlServer" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Users" Member="Users">
     <Type Name="User">
@@ -70,6 +70,7 @@
       <Column Name="count" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="notes" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="created_on_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="CommunityMetrics_UserActivity_CommunityMetrics_UserActivityLink" Member="CommunityMetrics_UserActivityLinks" ThisKey="id" OtherKey="user_activity_id" Type="CommunityMetrics_UserActivityLink" />
       <Association Name="User_CommunityMetrics_UserActivity" Member="User" ThisKey="user_id" OtherKey="UserID" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="CommunityMetrics_Activity_CommunityMetrics_UserActivity" Member="CommunityMetrics_Activity" ThisKey="activity_id" OtherKey="id" Type="CommunityMetrics_Activity" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
@@ -101,6 +102,15 @@
       <Column Name="last_modified_on_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="CommunityMetrics_Activity_CommunityMetrics_UserActivity" Member="CommunityMetrics_UserActivities" ThisKey="id" OtherKey="activity_id" Type="CommunityMetrics_UserActivity" />
       <Association Name="CommunityMetrics_Activity_CommunityMetrics_ActivitySetting" Member="CommunityMetrics_ActivitySettings" ThisKey="id" OtherKey="activity_id" Type="CommunityMetrics_ActivitySetting" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CommunityMetrics_UserActivityLinks" Member="CommunityMetrics_UserActivityLinks">
+    <Type Name="CommunityMetrics_UserActivityLink">
+      <Column Name="id" AutoSync="Never" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_activity_id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="nvarchar(255)" CanBeNull="true" />
+      <Column Name="href" Type="System.String" DbType="nvarchar(255)" CanBeNull="true" />
+      <Association Name="CommunityMetrics_UserActivity_CommunityMetrics_UserActivityLink" Member="CommunityMetrics_UserActivity" ThisKey="user_activity_id" OtherKey="id" Type="CommunityMetrics_UserActivity" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

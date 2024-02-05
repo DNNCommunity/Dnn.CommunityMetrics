@@ -157,8 +157,20 @@ dnnCommunityMetrics.controller('userActivityListController', ['$scope', '$q', '$
         return date;
     };
 
+    $scope.getDate30DaysAgo = function () {
+        var date = new Date();
+        date.setDate(date.getDate() - 30);
+        return date;
+    };
+
     $scope.rollingYear = function () {
         $scope.period_start = $scope.getDateOneYearAgo();
+        $scope.period_end = $scope.getCurrentDate();
+        $scope.getUserActivity();
+    };
+
+    $scope.last30Days = function () {
+        $scope.period_start = $scope.getDate30DaysAgo();
         $scope.period_end = $scope.getCurrentDate();
         $scope.getUserActivity();
     };
@@ -169,7 +181,7 @@ dnnCommunityMetrics.controller('userActivityListController', ['$scope', '$q', '$
         return $q.all(promises);
     };
     init();
-    $scope.rollingYear();
+    $scope.last30Days();
 
 }]);
 

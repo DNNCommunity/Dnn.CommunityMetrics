@@ -21,7 +21,7 @@
         
         <div class="form-group">
             <label for="activity_id" class="control-label">Activity <span class="text-danger">*</span></label>
-            <select name="activity_id" ng-model="user_activity.activity_id" class="form-control" ng-options="activity.id as activity.name for activity in activities" required ng-change="activityChanged()" ng-class="{'is-invalid': formUserActivity.activity_id.$invalid && submitted, 'is-valid': formUserActivity.activity_id.$valid && submitted}"></select>
+            <select name="activity_id" ng-model="user_activity.activity_id" class="form-select" ng-options="activity.id as activity.name for activity in activities" required ng-change="activityChanged()" ng-class="{'is-invalid': formUserActivity.activity_id.$invalid && submitted, 'is-valid': formUserActivity.activity_id.$valid && submitted}"></select>
             <div class="error text-danger" role="alert" ng-messages="formUserActivity.activity_id.$error" ng-if="submitted" ng-cloak>
                 <div ng-message="required">This field is required</div>
             </div>
