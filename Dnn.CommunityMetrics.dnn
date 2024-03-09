@@ -1,6 +1,6 @@
 <dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="Dnn.CommunityMetrics" type="Module" version="01.03.00">
+    <package name="Dnn.CommunityMetrics" type="Module" version="01.03.01">
       <friendlyName>Dnn.CommunityMetrics</friendlyName>
       <description>Community Metrics</description>
       <iconFile>~/images/icon_extensions_32px.png</iconFile>
@@ -17,7 +17,7 @@
         <dependency type="CoreVersion">09.11.01</dependency>
       </dependencies>
       <components>
-        <component type="Cleanup" version="01.03.00" glob="DesktopModules/Dnn.CommunityMetrics/**/*" />
+        <component type="Cleanup" version="01.03.01" glob="DesktopModules/Dnn.CommunityMetrics/**/*" />
         <component type="Script">
           <scripts>
             <basePath>DesktopModules\Dnn.CommunityMetrics</basePath>
@@ -77,6 +77,11 @@
             <assembly>
               <name>Dnn.CommunityMetrics.dll</name>
               <path>bin</path>
+            </assembly>
+            <assembly>
+              <name>Octokit.dll</name>
+              <path>bin</path>
+    		  <version>10.0.0</version>
             </assembly>
           </assemblies>
         </component>
