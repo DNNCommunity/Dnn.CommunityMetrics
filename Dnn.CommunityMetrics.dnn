@@ -81,6 +81,7 @@
             <assembly>
               <name>Octokit.dll</name>
               <path>bin</path>
+    		  <version>10.0.0</version>
             </assembly>
           </assemblies>
         </component>
