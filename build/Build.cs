@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using BuildHelpers;
 using Microsoft.Build.Tasks;
 using Nuke.Common;
 using Nuke.Common.ChangeLog;
@@ -99,8 +100,15 @@ class Build : NukeBuild
         .DependsOn(Compile)
         .Executes(() =>
         {
-            var assembly = RootDirectory / "bin" / Configuration / $"{ProjectName}.dll";
-            CopyFileToDirectory(assembly, DnnBinDirectory, policy: FileExistsPolicy.Overwrite);
+            var files = RootDirectory.GlobFiles(
+                $"bin/Debug/*{ProjectName}*.dll",
+                $"bin/Debug/*{ProjectName}*.pdb",
+                "bin/Debug/Octokit.dll");
+            foreach (var file in files)
+            {
+                Helpers.CopyFileToDirectoryIfChanged(file, DnnBinDirectory);
+            }
+
         });
 
     Target Package => _ => _
@@ -112,7 +120,6 @@ class Build : NukeBuild
             var stagingDirectory = RootDirectory / "staging";
             var rootFiles = RootDirectory.GlobFiles("*.dnn", "LICENSE");
             var rootResourceFiles = RootDirectory.GlobFiles("*.ascx", "*.css");
-            var assembly = RootDirectory / "bin" / Configuration / $"{ProjectName}.dll";
             var appFolder = RootDirectory / "app";
             var pluginsFolder = RootDirectory / "plugins";
             var scriptsFolder = RootDirectory / "Scripts";
@@ -123,7 +130,22 @@ class Build : NukeBuild
             CopyDirectoryRecursively(scriptsFolder, stagingDirectory / "Scripts", directoryPolicy: DirectoryExistsPolicy.Merge, filePolicy: FileExistsPolicy.Overwrite);
             CopyDirectoryRecursively(appFolder, resourcesDirectory / "app", directoryPolicy: DirectoryExistsPolicy.Merge, filePolicy: FileExistsPolicy.Overwrite);
             CopyDirectoryRecursively(pluginsFolder, resourcesDirectory / "plugins", directoryPolicy: DirectoryExistsPolicy.Merge, filePolicy: FileExistsPolicy.Overwrite);
-            CopyFileToDirectory(assembly, stagingDirectory / "bin", policy: FileExistsPolicy.Overwrite, createDirectories: true);
+
+            // Libraries
+            var manifest = RootDirectory.GlobFiles("*.dnn").FirstOrDefault();
+            var binDirectory = RootDirectory / "bin" / Configuration;
+            var assemblies = binDirectory.GlobFiles("*.dll");
+            var manifestAssemblies = Helpers.GetAssembliesFromManifest(manifest);
+            assemblies.ForEach(assembly =>
+            {
+                var assemblyFile = new FileInfo(assembly);
+                var assemblyIncludedInManifest = manifestAssemblies.Any(a => a == assemblyFile.Name);
+
+                if (assemblyIncludedInManifest)
+                {
+                    CopyFileToDirectory(assembly, stagingDirectory / "bin", FileExistsPolicy.Overwrite);
+                }
+            });
 
             resourcesDirectory.ZipTo(stagingDirectory / "resources.zip");
             resourcesDirectory.DeleteDirectory();
